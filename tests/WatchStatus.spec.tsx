@@ -2,20 +2,21 @@ import { render, screen } from "@testing-library/react";
 import { WatchStatus } from "../src/components/WatchStatus";
 
 describe("WatchStatus component", () => {
-    const seenWatchStatus = {
-        seen: false,
-        liked: false,
-        when: null,
-    };
-    it("Renders the watch status", () => {
-        render(<WatchStatus watched={seenWatchStatus}></WatchStatus>);
-    });
-    it("Renders the watch status", () => {
-        render(<WatchStatus watched={seenWatchStatus}></WatchStatus>);
+    it("renders 'Watched' when seen is true", () => {
+        render(
+            <WatchStatus
+                watched={{
+                    seen: true,
+                    liked: false,
+                    when: null,
+                }}
+            />,
+        );
         const watchedText = screen.getByText(/Watched/i);
         expect(watchedText).toBeInTheDocument();
     });
-    it("Renders the watch status", () => {
+
+    it("renders 'Not yet watched' when seen is false", () => {
         render(
             <WatchStatus
                 watched={{
@@ -23,9 +24,9 @@ describe("WatchStatus component", () => {
                     liked: false,
                     when: null,
                 }}
-            ></WatchStatus>,
+            />,
         );
-        const watchedText = screen.getByText(/Not yet watched/i);
-        expect(watchedText).toBeInTheDocument();
+        const notWatchedText = screen.getByText(/Not yet watched/i);
+        expect(notWatchedText).toBeInTheDocument();
     });
 });
